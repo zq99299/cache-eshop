@@ -1,0 +1,37 @@
+allprojects {
+    group = 'cn.mrcode.cache.eshop'
+    version = '1.0.0'
+
+    repositories {
+        mavenLocal()
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        maven { url "https://maven.repository.redhat.com/ga/" }
+        maven { url "http://maven.nuiton.org/nexus/content/groups/releases/" }
+        maven { url "https://repository.cloudera.com/artifactory/cloudera-repos/" }
+        mavenCentral()
+    }
+}
+
+
+subprojects { p ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = '1.8'
+
+    //跳过所有文件的编译测试；不是跳过compileTestJava task 而是在执行该task的时候，跳过所有的测试文件
+    test {
+        exclude '**/*.class'
+    }
+
+    // 这里一定得要。在多模块下，不然编译失败，
+    // bootJar 默认会关闭 jar 任务
+    jar {
+        enabled = true
+    }
+
+    //指定编译的编码
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}

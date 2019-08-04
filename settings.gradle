@@ -1,0 +1,9 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+rootProject.name = 'cache-eshop'
+
+include 'eshop-eureka-server'
+include 'eshop-eurela-client'
