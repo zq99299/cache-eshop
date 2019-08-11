@@ -1,0 +1,11 @@
+server:
+  port: 9005
+
+spring:
+  application:
+    name: greeting-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
