@@ -15,8 +15,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // 在 boot2 中 spring-cloud-starter-ribbon 已过时
     // https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html
-    compile 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+//    compile 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+    compile('org.springframework.cloud:spring-cloud-starter-openfeign')
 }
+
 
 dependencyManagement {
     imports {
