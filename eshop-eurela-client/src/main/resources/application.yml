@@ -9,3 +9,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      cluster: eshop-eurela-client
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  # 或者单独暴露 /hystrix.stream 断点

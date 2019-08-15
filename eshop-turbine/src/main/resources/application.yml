@@ -1,0 +1,26 @@
+server:
+  port: 9007
+
+spring:
+  application:
+    name: eshop-turbine
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+turbine:
+  # 要聚合的服务
+  app-config: ESHOP-EURELA-CLIENT,GREETING-SERVICE
+  # 聚合集群配置，其他客户端没有配置，则这里使用默认
+  # 注意下面的配置非常重要，否则访问 http://localhost:9007/clusters 不会出现任何 /urbine.stream 地址
+  aggregator:
+    cluster-config: eshop-eurela-client
+  clusterNameExpression: metadata['cluster']
