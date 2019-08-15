@@ -1,0 +1,5 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:9009 # 指向刚才创建的配置中心项目
+      profile: dev # 默认为 default

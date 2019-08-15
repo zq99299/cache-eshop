@@ -1,0 +1,21 @@
+server:
+  port: 9009
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          # uri: http://localhost/mrcode/config.git
+          # username: xx
+          # password: xx
+          # 为了方便本地测试，使用本地目录方式，但是该目录需要是一个 git 仓库
+          # 使用 H:\dev\project\mrcode\cache-eshop-config-repo 目录
+          # test 作为一个配置仓库，在该目录下初始化为一个 git 仓库
+          uri: file:///H:\dev\project\mrcode\cache-eshop-config-repo\test
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

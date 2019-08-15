@@ -1,6 +1,7 @@
 package cn.mrcode.cache.eshop.greetingservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -30,6 +31,14 @@ public class GreetingServiceApplication {
     @RequestMapping("/")
     public String home(String name) {
         return eurelaClientService.home(name);
+    }
+
+    @Value("${name}")
+    private String name;
+
+    @RequestMapping("/name")
+    public String name() {
+        return name;
     }
 
     @FeignClient(name = "eshop-eurela-client", fallback = EurelaClientServiceFallback.class)
