@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableFeignClients
 @EnableHystrixDashboard
 @EnableCircuitBreaker
-public class Application {
+public class GreetingServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(GreetingServiceApplication.class, args);
     }
 
     @Autowired

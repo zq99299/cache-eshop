@@ -6,9 +6,9 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
 @SpringBootApplication
 @EnableTurbine
-public class Application {
+public class EshopTurbineApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(EshopTurbineApplication.class, args);
     }
 }

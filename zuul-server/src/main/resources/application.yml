@@ -1,0 +1,20 @@
+server:
+  port: 9007
+
+spring:
+  application:
+    name: zuul-server
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+zuul:
+  routes:
+    greeting-service:
+      path: /greeting-service/**
+      serviceId: greeting-service
+    eshop-eurela-client:
+      path: /eshop-eurela-client/**
+      serviceId: eshop-eurela-client
