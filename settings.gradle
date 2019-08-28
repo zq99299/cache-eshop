@@ -12,3 +12,6 @@ include 'eshop-turbine'
 include 'zuul-server'
 include 'config-server'
 include 'sleuth-server'
+include 'user-server'
+include 'eshop-product-service'
+

@@ -1,0 +1,31 @@
+server:
+  port: 9014
+logging:
+  level:
+    root: info
+    # 启动显示 controller 中的路径映射也就是 mapping
+    org.springframework.web: TRACE
+    # 可以打印 sql
+    cn.mrcode.cache.eshop.userserver: debug
+
+spring:
+  application:
+    name: user-server
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eshop?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis:
+  #  type-aliases-package: cn.mrcode.cachepdp.eshop.product.ha.model
+  mapper-locations: classpath*:mapper/*.xml
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
