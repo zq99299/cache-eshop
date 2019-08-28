@@ -1,0 +1,11 @@
+server:
+  port: 9012
+
+spring:
+  application:
+    name: sleuth-server
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

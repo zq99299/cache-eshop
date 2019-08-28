@@ -1,4 +1,4 @@
-package cn.mrcode.cache.eshop.zuulserver;
+package cn.mrcode.cache.eshop.zuulhserver;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
