@@ -1,0 +1,27 @@
+server:
+  port: 9102
+logging:
+  level:
+    root: info
+    # 启动显示 controller 中的路径映射也就是 mapping
+    org.springframework.web: TRACE
+    # 可以打印 sql
+    cn.mrcode.cache.eshop.userserver: debug
+
+spring:
+  application:
+    name: eshop-price-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/eshop?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
