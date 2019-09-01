@@ -21,6 +21,10 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  redis:
+    port: 6379
+    host: localhost
+
 eureka:
   client:
     serviceUrl:
