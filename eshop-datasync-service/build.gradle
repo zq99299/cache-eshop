@@ -1,0 +1,28 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+    set('springCloudVersion', "Greenwich.SR2")
+}
+
+dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile 'com.alibaba:fastjson:1.1.43'
+
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+    compile 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}

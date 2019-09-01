@@ -1,0 +1,27 @@
+server:
+  port: 9106
+logging:
+  level:
+    root: info
+    # 启动显示 controller 中的路径映射也就是 mapping
+    org.springframework.web: TRACE
+
+spring:
+  application:
+    name: eshop-datasync-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+  redis:
+    port: 6379
+    host: localhost
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

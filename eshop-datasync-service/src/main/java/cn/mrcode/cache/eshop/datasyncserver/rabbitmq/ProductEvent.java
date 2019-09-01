@@ -1,4 +1,4 @@
-package cn.mrcode.cache.eshop.productserver.rabbitmq;
+package cn.mrcode.cache.eshop.datasyncserver.rabbitmq;
 
 /**
  * 商品事件
@@ -11,6 +11,9 @@ public class ProductEvent {
     private String dataType;
     private Long id;
     private Long productId;
+
+    public ProductEvent() {
+    }
 
     public ProductEvent(String eventType, String dataType, Long id) {
         this.eventType = eventType;

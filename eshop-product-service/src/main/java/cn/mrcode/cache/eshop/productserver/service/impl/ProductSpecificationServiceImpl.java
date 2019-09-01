@@ -21,17 +21,24 @@ public class ProductSpecificationServiceImpl implements ProductSpecificationServ
 
     public void add(ProductSpecification productSpecification) {
         productSpecificationMapper.add(productSpecification);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("add", "specification", productSpecification.getId())));
+        ProductEvent event = new ProductEvent("add", "specification", productSpecification.getId());
+        event.setProductId(productSpecification.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void update(ProductSpecification productSpecification) {
         productSpecificationMapper.update(productSpecification);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("update", "specification", productSpecification.getId())));
+        ProductEvent event = new ProductEvent("update", "specification", productSpecification.getId());
+        event.setProductId(productSpecification.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void delete(Long id) {
+        ProductSpecification productSpecification = findById(id);
         productSpecificationMapper.delete(id);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("delete", "specification", id)));
+        ProductEvent event = new ProductEvent("delete", "specification", productSpecification.getId());
+        event.setProductId(productSpecification.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public ProductSpecification findById(Long id) {

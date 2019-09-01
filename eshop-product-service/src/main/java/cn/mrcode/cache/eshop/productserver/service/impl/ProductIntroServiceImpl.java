@@ -21,17 +21,24 @@ public class ProductIntroServiceImpl implements ProductIntroService {
 
     public void add(ProductIntro productIntro) {
         productIntroMapper.add(productIntro);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("add", "intro", productIntro.getId())));
+        ProductEvent event = new ProductEvent("add", "intro", productIntro.getId());
+        event.setProductId(productIntro.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void update(ProductIntro productIntro) {
         productIntroMapper.update(productIntro);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("update", "intro", productIntro.getId())));
+        ProductEvent event = new ProductEvent("update", "intro", productIntro.getId());
+        event.setProductId(productIntro.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void delete(Long id) {
+        ProductIntro productIntro = findById(id);
         productIntroMapper.delete(id);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("delete", "intro", id)));
+        ProductEvent event = new ProductEvent("delete", "intro", productIntro.getId());
+        event.setProductId(productIntro.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public ProductIntro findById(Long id) {

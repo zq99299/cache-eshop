@@ -22,17 +22,24 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 
     public void add(ProductProperty productProperty) {
         productPropertyMapper.add(productProperty);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("add", "property", productProperty.getId())));
+        ProductEvent productEvent = new ProductEvent("add", "property", productProperty.getId());
+        productEvent.setProductId(productProperty.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
 
     public void update(ProductProperty productProperty) {
         productPropertyMapper.update(productProperty);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("update", "property", productProperty.getId())));
+        ProductEvent productEvent = new ProductEvent("update", "property", productProperty.getId());
+        productEvent.setProductId(productProperty.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
 
     public void delete(Long id) {
+        ProductProperty productProperty = findById(id);
         productPropertyMapper.delete(id);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("delete", "property", id)));
+        ProductEvent productEvent = new ProductEvent("delete", "property", productProperty.getId());
+        productEvent.setProductId(productProperty.getProductId());
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
 
     public ProductProperty findById(Long id) {

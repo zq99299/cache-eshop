@@ -4,12 +4,12 @@ import cn.mrcode.cache.eshop.productserver.model.ProductIntro;
 
 public interface ProductIntroService {
 
-    public void add(ProductIntro productIntro);
+    void add(ProductIntro productIntro);
 
-    public void update(ProductIntro productIntro);
+    void update(ProductIntro productIntro);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public ProductIntro findById(Long id);
+    ProductIntro findById(Long id);
 
 }
