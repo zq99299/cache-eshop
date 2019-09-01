@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void delete(Long id) {
         productMapper.delete(id);
-        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("delete", "product", id));
+        rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(new ProductEvent("delete", "product", id)));
     }
 
     public Product findById(Long id) {
