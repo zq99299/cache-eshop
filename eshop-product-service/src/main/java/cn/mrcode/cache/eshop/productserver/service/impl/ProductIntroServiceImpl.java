@@ -21,14 +21,14 @@ public class ProductIntroServiceImpl implements ProductIntroService {
 
     public void add(ProductIntro productIntro) {
         productIntroMapper.add(productIntro);
-        ProductEvent event = new ProductEvent("add", "intro", productIntro.getId());
+        ProductEvent event = new ProductEvent("add", "product_intro", productIntro.getId());
         event.setProductId(productIntro.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void update(ProductIntro productIntro) {
         productIntroMapper.update(productIntro);
-        ProductEvent event = new ProductEvent("update", "intro", productIntro.getId());
+        ProductEvent event = new ProductEvent("update", "product_intro", productIntro.getId());
         event.setProductId(productIntro.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
@@ -36,7 +36,7 @@ public class ProductIntroServiceImpl implements ProductIntroService {
     public void delete(Long id) {
         ProductIntro productIntro = findById(id);
         productIntroMapper.delete(id);
-        ProductEvent event = new ProductEvent("delete", "intro", productIntro.getId());
+        ProductEvent event = new ProductEvent("delete", "product_intro", productIntro.getId());
         event.setProductId(productIntro.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }

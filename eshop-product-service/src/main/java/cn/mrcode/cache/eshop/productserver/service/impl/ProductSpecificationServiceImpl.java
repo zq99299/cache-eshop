@@ -21,14 +21,14 @@ public class ProductSpecificationServiceImpl implements ProductSpecificationServ
 
     public void add(ProductSpecification productSpecification) {
         productSpecificationMapper.add(productSpecification);
-        ProductEvent event = new ProductEvent("add", "specification", productSpecification.getId());
+        ProductEvent event = new ProductEvent("add", "product_specification", productSpecification.getId());
         event.setProductId(productSpecification.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
 
     public void update(ProductSpecification productSpecification) {
         productSpecificationMapper.update(productSpecification);
-        ProductEvent event = new ProductEvent("update", "specification", productSpecification.getId());
+        ProductEvent event = new ProductEvent("update", "product_specification", productSpecification.getId());
         event.setProductId(productSpecification.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }
@@ -36,7 +36,7 @@ public class ProductSpecificationServiceImpl implements ProductSpecificationServ
     public void delete(Long id) {
         ProductSpecification productSpecification = findById(id);
         productSpecificationMapper.delete(id);
-        ProductEvent event = new ProductEvent("delete", "specification", productSpecification.getId());
+        ProductEvent event = new ProductEvent("delete", "product_specification", productSpecification.getId());
         event.setProductId(productSpecification.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(event));
     }

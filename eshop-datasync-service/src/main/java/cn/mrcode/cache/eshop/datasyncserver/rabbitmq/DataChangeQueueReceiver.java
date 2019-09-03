@@ -109,7 +109,7 @@ public class DataChangeQueueReceiver {
             redisTemplate.delete("product_intro_" + id);
         }
         // 这里暂时还不知道为什么要用 product 事件，而不是具体的对象事件，只能后面再来补坑了
-        DimEvent dimEvent = new DimEvent("product", productId);
+        DimEvent dimEvent = new DimEvent("product_intro", productId);
         rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
     }
 

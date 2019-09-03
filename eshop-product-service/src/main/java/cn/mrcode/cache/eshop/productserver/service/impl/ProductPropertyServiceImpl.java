@@ -22,14 +22,14 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 
     public void add(ProductProperty productProperty) {
         productPropertyMapper.add(productProperty);
-        ProductEvent productEvent = new ProductEvent("add", "property", productProperty.getId());
+        ProductEvent productEvent = new ProductEvent("add", "product_property", productProperty.getId());
         productEvent.setProductId(productProperty.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
 
     public void update(ProductProperty productProperty) {
         productPropertyMapper.update(productProperty);
-        ProductEvent productEvent = new ProductEvent("update", "property", productProperty.getId());
+        ProductEvent productEvent = new ProductEvent("update", "product_property", productProperty.getId());
         productEvent.setProductId(productProperty.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
@@ -37,7 +37,7 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
     public void delete(Long id) {
         ProductProperty productProperty = findById(id);
         productPropertyMapper.delete(id);
-        ProductEvent productEvent = new ProductEvent("delete", "property", productProperty.getId());
+        ProductEvent productEvent = new ProductEvent("delete", "product_property", productProperty.getId());
         productEvent.setProductId(productProperty.getProductId());
         rabbitMQSender.send(RabbitMQName.DATA_CHANGE_QUEUE, JSON.toJSONString(productEvent));
     }
