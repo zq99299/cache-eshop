@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 @RabbitListener(queues = "aggr-data-change-queue") // 前面的队列也统一成这种横线写法
 public class DataChangeQueueReceiver {
@@ -80,6 +83,32 @@ public class DataChangeQueueReceiver {
                 product.put("productProperty", JSON.parseObject(productPropertyJsonStr));
             }
             String productSpecificationJsonStr = redisTemplate.opsForValue().get("product_specification_" + productId);
+            if (StringUtils.isNotBlank(productSpecificationJsonStr)) {
+                product.put("productSpecification", JSON.parseObject(productSpecificationJsonStr));
+            }
+            redisTemplate.opsForValue().set("dim_" + productKey, product.toJSONString());
+        }
+    }
+
+    private void processProductDimDataChangeMessageBatch(DimEvent event) {
+        System.out.println("商品聚合：" + event);
+        Long productId = event.getId();
+        String productKey = "product_" + productId;
+        String productPropertyKey = "product_property_" + productId;
+        String productSpecificationKey = "product_specification_" + productId;
+        List<String> items = redisTemplate.opsForValue().multiGet(Arrays.asList(productKey, productPropertyKey, productSpecificationKey));
+
+        String productJsonStr = items.get(0);
+        if (StringUtils.isBlank(productJsonStr)) {
+            // 主商品数据都没有的话，就直接删除这个聚合数据
+            redisTemplate.delete(productKey);
+        } else {
+            JSONObject product = JSON.parseObject(productJsonStr);
+            String productPropertyJsonStr = items.get(1);
+            if (StringUtils.isNotBlank(productPropertyJsonStr)) {
+                product.put("productProperty", JSON.parseObject(productPropertyJsonStr));
+            }
+            String productSpecificationJsonStr = items.get(2);
             if (StringUtils.isNotBlank(productSpecificationJsonStr)) {
                 product.put("productSpecification", JSON.parseObject(productSpecificationJsonStr));
             }

@@ -22,5 +22,7 @@ public interface ProductPropertyMapper {
 	
 	@Select("SELECT * FROM product_property WHERE id=#{id}")  
 	public ProductProperty findById(Long id);
-	
+
+	@Select("SELECT * FROM product_property WHERE product_id=#{productId}")
+    ProductProperty findByProductId(Long productId);
 }

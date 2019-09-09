@@ -18,4 +18,5 @@ include 'eshop-price-service'
 include 'eshop-inventory-service'
 include 'eshop-datasync-service'
 include 'eshop-dataaggr-service'
+include 'eshop-datalink-service'
 

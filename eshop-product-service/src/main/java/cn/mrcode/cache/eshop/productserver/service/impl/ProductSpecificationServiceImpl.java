@@ -45,4 +45,8 @@ public class ProductSpecificationServiceImpl implements ProductSpecificationServ
         return productSpecificationMapper.findById(id);
     }
 
+    @Override
+    public ProductSpecification findByProductId(Long productId) {
+        return productSpecificationMapper.findByProductId(productId);
+    }
 }

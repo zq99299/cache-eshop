@@ -11,5 +11,6 @@ public interface ProductPropertyService {
 	public void delete(Long id);
 	
 	public ProductProperty findById(Long id);
-	
+
+    ProductProperty findByProductId(Long productId);
 }

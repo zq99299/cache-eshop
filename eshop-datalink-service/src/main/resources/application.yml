@@ -1,0 +1,22 @@
+server:
+  port: 9110
+logging:
+  level:
+    root: info
+    # 启动显示 controller 中的路径映射也就是 mapping
+    org.springframework.web: TRACE
+
+spring:
+  application:
+    name: eshop-datalink-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis: # 这里连接的是 twemproxy 代理地址，主机群的
+    port: 1112
+    host: 192.168.99.11
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

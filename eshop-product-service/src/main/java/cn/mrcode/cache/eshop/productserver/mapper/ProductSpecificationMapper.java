@@ -23,4 +23,6 @@ public interface ProductSpecificationMapper {
     @Select("SELECT * FROM product_specification WHERE id=#{id}")
     public ProductSpecification findById(Long id);
 
+    @Select("SELECT * FROM product_specification WHERE product_id=#{productId}")
+    ProductSpecification findByProductId(Long productId);
 }

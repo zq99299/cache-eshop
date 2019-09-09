@@ -1,6 +1,7 @@
 package cn.mrcode.cache.eshop.productserver.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,4 +63,13 @@ public class ProductSpecificationController {
         return new ProductSpecification();
     }
 
+    @GetMapping("/product-specification/findByProductId")
+    public ProductSpecification findProductSpecificationByProductId(Long productId) {
+        try {
+            return productSpecificationService.findByProductId(productId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ProductSpecification();
+    }
 }
