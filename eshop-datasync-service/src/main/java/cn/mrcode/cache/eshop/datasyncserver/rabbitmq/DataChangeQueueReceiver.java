@@ -9,6 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.PostConstruct;
+
 import cn.mrcode.cache.eshop.datasyncserver.service.EshopProductService;
 
 @Component
@@ -21,6 +28,7 @@ public class DataChangeQueueReceiver {
     @Autowired
     private RabbitMQSender rabbitMQSender;
 
+    private Set<String> dimDataChangeEventSet = Collections.synchronizedSet(new HashSet<>());
     /**
      * 数据聚合队列
      */
@@ -64,7 +72,8 @@ public class DataChangeQueueReceiver {
             redisTemplate.delete("brand_" + id);
         }
         DimEvent dimEvent = new DimEvent("brand", id);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
     }
 
     private void processCategoryDataChangeMessage(ProductEvent productEvent) {
@@ -78,7 +87,8 @@ public class DataChangeQueueReceiver {
             redisTemplate.delete("category_" + id);
         }
         DimEvent dimEvent = new DimEvent("category", id);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
     }
 
     private void processProductDataChangeMessage(ProductEvent productEvent) {
@@ -92,7 +102,9 @@ public class DataChangeQueueReceiver {
             redisTemplate.delete("product_" + id);
         }
         DimEvent dimEvent = new DimEvent("product", id);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
+        System.out.println("Product: " + id);
     }
 
     private void processProductIntroDataChangeMessage(ProductEvent productEvent) {
@@ -110,7 +122,8 @@ public class DataChangeQueueReceiver {
         }
         // 这里暂时还不知道为什么要用 product 事件，而不是具体的对象事件，只能后面再来补坑了
         DimEvent dimEvent = new DimEvent("product_intro", productId);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
     }
 
     private void processProductPropertyDataChangeMessage(ProductEvent productEvent) {
@@ -126,7 +139,9 @@ public class DataChangeQueueReceiver {
         }
         // 这里暂时还不知道为什么要用 product 事件，而不是具体的对象事件，只能后面再来补坑了
         DimEvent dimEvent = new DimEvent("product", productId);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
+        System.out.println("ProductProperty: " + productId);
     }
 
     private void processProductSpecificationDataChangeMessage(ProductEvent productEvent) {
@@ -142,6 +157,29 @@ public class DataChangeQueueReceiver {
         }
         // 这里暂时还不知道为什么要用 product 事件，而不是具体的对象事件，只能后面再来补坑了
         DimEvent dimEvent = new DimEvent("product", productId);
-        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+//        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, JSON.toJSONString(dimEvent));
+        dimDataChangeEventSet.add(JSON.toJSONString(dimEvent));
+        System.out.println("ProductSpecification: " + productId);
+
+    }
+
+    @PostConstruct
+    public void start() {
+        new Thread(() -> {
+            while (true) {
+                // 这种方式目前肯定在并发下会出现问题，这线程和上面的线程不同步，会导致某些数据没有被处理就清空了
+                if (!dimDataChangeEventSet.isEmpty()) {
+                    for (String dimEvent : dimDataChangeEventSet) {
+                        rabbitMQSender.send(AGGR_DATA_CHANGE_QUEUE, dimEvent);
+                    }
+                    dimDataChangeEventSet.clear();
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }  

@@ -66,6 +66,7 @@ public class DataChangeQueueReceiver {
     }
 
     private void processProductDimDataChangeMessage(DimEvent event) {
+        System.out.println("商品聚合：" + event);
         Long productId = event.getId();
         String productKey = "product_" + productId;
         String productJsonStr = redisTemplate.opsForValue().get(productKey);
