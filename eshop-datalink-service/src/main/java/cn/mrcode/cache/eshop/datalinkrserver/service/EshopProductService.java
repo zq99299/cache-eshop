@@ -26,8 +26,8 @@ public interface EshopProductService {
     String findProductSpecificationById(@RequestParam(value = "id") Long id);
 
     @GetMapping("/product-property/findByProductId")
-    String findProductPropertyByProductId(Long productId);
+    String findProductPropertyByProductId(@RequestParam(value = "productId") Long productId);
 
     @GetMapping("/product-specification/findByProductId")
-    String findProductSpecificationByProductId(Long productId);
+    String findProductSpecificationByProductId(@RequestParam(value = "productId") Long productId);
 }

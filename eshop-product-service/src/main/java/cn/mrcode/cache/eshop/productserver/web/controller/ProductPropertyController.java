@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import cn.mrcode.cache.eshop.productserver.model.ProductProperty;
 import cn.mrcode.cache.eshop.productserver.service.ProductPropertyService;
 
@@ -63,14 +65,14 @@ public class ProductPropertyController {
         return new ProductProperty();
     }
 
-    @GetMapping("/product-property/findByProductId")
-    public ProductProperty findProductPropertyByProductId(Long productId) {
+    @GetMapping("/findByProductId")
+    public List<ProductProperty> findProductPropertyByProductId(Long productId) {
         try {
             return productPropertyService.findByProductId(productId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ProductProperty();
+        return null;
     }
 
 }

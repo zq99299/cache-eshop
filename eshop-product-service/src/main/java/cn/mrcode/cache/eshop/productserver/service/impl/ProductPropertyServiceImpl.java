@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import cn.mrcode.cache.eshop.productserver.mapper.ProductPropertyMapper;
 import cn.mrcode.cache.eshop.productserver.model.ProductProperty;
 import cn.mrcode.cache.eshop.productserver.rabbitmq.ProductEvent;
@@ -47,7 +49,7 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
     }
 
     @Override
-    public ProductProperty findByProductId(Long productId) {
+    public List<ProductProperty> findByProductId(Long productId) {
         return productPropertyMapper.findByProductId(productId);
     }
 }

@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import cn.mrcode.cache.eshop.productserver.mapper.ProductSpecificationMapper;
 import cn.mrcode.cache.eshop.productserver.model.ProductSpecification;
 import cn.mrcode.cache.eshop.productserver.rabbitmq.ProductEvent;
@@ -46,7 +48,7 @@ public class ProductSpecificationServiceImpl implements ProductSpecificationServ
     }
 
     @Override
-    public ProductSpecification findByProductId(Long productId) {
+    public List<ProductSpecification> findByProductId(Long productId) {
         return productSpecificationMapper.findByProductId(productId);
     }
 }

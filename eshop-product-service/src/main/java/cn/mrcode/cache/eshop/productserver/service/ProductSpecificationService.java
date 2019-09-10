@@ -1,5 +1,7 @@
 package cn.mrcode.cache.eshop.productserver.service;
 
+import java.util.List;
+
 import cn.mrcode.cache.eshop.productserver.model.ProductSpecification;
 
 public interface ProductSpecificationService {
@@ -12,5 +14,5 @@ public interface ProductSpecificationService {
 
     public ProductSpecification findById(Long id);
 
-    ProductSpecification findByProductId(Long productId);
+    List<ProductSpecification> findByProductId(Long productId);
 }

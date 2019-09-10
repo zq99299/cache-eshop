@@ -13,7 +13,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   redis: # 这里连接的是 twemproxy 代理地址，主机群的
-    port: 1112
+    port: 1111
     host: 192.168.99.11
 
 eureka:

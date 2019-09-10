@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 import cn.mrcode.cache.eshop.productserver.model.ProductProperty;
 
 @Mapper
@@ -24,5 +26,5 @@ public interface ProductPropertyMapper {
 	public ProductProperty findById(Long id);
 
 	@Select("SELECT * FROM product_property WHERE product_id=#{productId}")
-    ProductProperty findByProductId(Long productId);
+	List<ProductProperty> findByProductId(Long productId);
 }

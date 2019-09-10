@@ -42,11 +42,11 @@ public class ProductController {
             // 这里需要在商品服务中增加按 productId 查询的接口
             String productPropertyJsonStr = eshopProductService.findProductPropertyByProductId(productId);
             if (StringUtils.isNotBlank(productPropertyJsonStr)) {
-                product.put("productProperty", JSON.parseObject(productPropertyJsonStr));
+                product.put("productProperty", JSON.parseArray(productPropertyJsonStr));
             }
             String productSpecificationJsonStr = eshopProductService.findProductSpecificationByProductId(productId);
             if (StringUtils.isNotBlank(productSpecificationJsonStr)) {
-                product.put("productSpecification", JSON.parseObject(productSpecificationJsonStr));
+                product.put("productSpecification", JSON.parseArray(productSpecificationJsonStr));
             }
             dimProductJsonStr = product.toJSONString();
             redisTemplate.opsForValue().set(dimProductKey, dimProductJsonStr);
