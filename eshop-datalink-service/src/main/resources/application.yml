@@ -20,3 +20,30 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+feign:
+  #  httpclient:
+  #    enabled: true
+  client:
+    config:
+      default:           #服务名，填写default为所有服务
+        connectTimeout: 10000
+        readTimeout: 400000 # 3.3 * 2 分钟
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 400000
+  threadpool:
+    default:
+      allowMaximumSizeToDivergeFromCoreSize: true
+      coreSize: 20
+      maximumSize: 1000
+      maxQueueSize: -1
+      queueSizeRejectionThreshold: -1
+      keepAliveTimeMinutes: 2

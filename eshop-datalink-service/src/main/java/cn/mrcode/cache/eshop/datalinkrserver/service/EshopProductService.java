@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "eshop-product-service")
+@FeignClient(value = "eshop-product-service",fallback = EshopProductServiceFallback.class)
 public interface EshopProductService {
 
     @GetMapping("/brand/findById")
