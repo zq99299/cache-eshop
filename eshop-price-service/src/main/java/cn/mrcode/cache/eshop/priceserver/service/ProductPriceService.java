@@ -12,4 +12,5 @@ public interface ProductPriceService {
 
     public ProductPrice findById(Long id);
 
+    ProductPrice findByProductId(Long productId);
 }

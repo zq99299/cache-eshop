@@ -38,4 +38,8 @@ public class ProductPriceServiceImpl implements ProductPriceService {
         return productPriceMapper.findById(id);
     }
 
+    @Override
+    public ProductPrice findByProductId(Long productId) {
+        return productPriceMapper.findByProductId(productId);
+    }
 }

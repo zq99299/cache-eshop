@@ -62,4 +62,15 @@ public class ProductInventoryController {
         return new ProductInventory();
     }
 
+    @RequestMapping("/findByProductId")
+    @ResponseBody
+    public ProductInventory findByProductId(Long productId) {
+        try {
+            return productPriceService.findByProductId(productId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ProductInventory();
+    }
+
 }

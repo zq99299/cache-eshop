@@ -10,6 +10,7 @@ import cn.mrcode.cache.eshop.inventoryserver.mapper.ProductInventoryMapper;
 import cn.mrcode.cache.eshop.inventoryserver.model.ProductInventory;
 import cn.mrcode.cache.eshop.inventoryserver.service.ProductInventoryService;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service
 public class ProductInventoryServiceImpl implements ProductInventoryService {
 
@@ -33,8 +34,20 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
         redisTemplate.delete("product_inventory_" + id);
     }
 
+
     public ProductInventory findById(Long id) {
         return productInventoryMapper.findById(id);
+    }
+
+    public ProductInventory findByProductId(Long productId) {
+        String key = "product_inventory_productId_" + productId;
+        String json = redisTemplate.opsForValue().get(key);
+        if (json != null) {
+            return JSON.parseObject(json, ProductInventory.class);
+        }
+        ProductInventory productInventory = productInventoryMapper.findByProductId(productId);
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(productInventory));
+        return productInventory;
     }
 
 }

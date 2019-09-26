@@ -12,4 +12,5 @@ public interface ProductInventoryService {
 
     public ProductInventory findById(Long id);
 
+    ProductInventory findByProductId(Long productId);
 }
